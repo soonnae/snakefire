@@ -150,7 +150,7 @@ class MessageRenderer(QtCore.QThread):
         if self._isImage(meta["type"], meta["name"]):
             attribs = "style=\"max-width: {maxWidth}px;\" ".format(maxWidth=self._maximumImageWidth)
             if data:
-                url_md5 = hashlib.md5(url).hexdigest()
+                url_md5 = hashlib.sha256(url.encode()).hexdigest()
                 return self.MESSAGES["image"].format(
                     type = meta["type"],
                     data = base64.encodestring(data),
@@ -161,7 +161,7 @@ class MessageRenderer(QtCore.QThread):
                     attribs = attribs
                 )
             else:
-                url_md5 = hashlib.md5(url).hexdigest()
+                url_md5 = hashlib.sha256(url.encode()).hexdigest()
                 return self.MESSAGES["image_url"].format(
                     url = url,
                     name = meta["name"],
